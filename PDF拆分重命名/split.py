@@ -4,10 +4,10 @@ from pdf2image import convert_from_path
 from PyPDF2 import PdfReader, PdfWriter
 
 # 定义输入文件路径
-input_pdf = '/home/liumu/code/光光の任务/PDF拆分重命名/11.pdf'
+input_pdf = '/home/liumu/code/光光の任务/PDF拆分重命名/input/12.pdf'
 
 # 创建输出文件夹
-output_folder = '/home/liumu/code/光光の任务/PDF拆分重命名/outPut/'
+output_folder = '/home/liumu/code/光光の任务/PDF拆分重命名/outPut/12/'
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
