@@ -1,4 +1,4 @@
-from boxmot import DeepOCSORT,StrongSORT
+from boxmot import DeepOCSORT
 from pathlib import Path
 import cv2
 import numpy as np
