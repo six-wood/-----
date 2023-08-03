@@ -13,7 +13,8 @@ tracker = DeepOCSORT(
 model = yolov5.load("yolov5x.pt")  # 定义检测器，加载与训练模型
 
 trackHistory = []  # 用栈保存跟踪历史
-historyLength = 200  # 跟踪历史长度
+historyLength = 2000  # 跟踪历史长度
+CacheLength = 200  # 跟踪历史缓存长度
 
 # 待入侵检测区域
 ImageROI = np.array(
@@ -26,8 +27,6 @@ ImageROI = np.array(
 MaxId = 100
 # 入侵帧数阈值
 IntrusionThreshold = 150
-# 存储目标id对应入侵帧数
-IntrusionCount = np.zeros(100, dtype="int")
 # 用于画出ROI区域的图像
 zeroImg = np.zeros(np.array([720, 1280, 3]), dtype=np.uint8)
 
@@ -60,6 +59,13 @@ def track(dets, im):
 
 # 进行入侵检测，返回检测结果，以下中心为依据
 
+
+# 截取历史记录
+def getHistory(trackHistory, historyLength):
+    if len(trackHistory) > historyLength:
+        return trackHistory[-historyLength:]
+    else:
+        return trackHistory
 
 def checkIntrusion(trackHistory, ImageROI, IntrusionThreshold, MaxId=100):
     IntrusionCount = np.zeros(MaxId, dtype="int")  # 创建计数器
@@ -104,8 +110,12 @@ while True:  # 模拟图像流输入
 
     trackHistory = trackHistory[-historyLength:] + [result]  # 保存跟踪历史
 
+    # 截取帧跟踪历史
+
+    cacheHistory = getHistory(trackHistory, CacheLength)
+
     checkResult = checkIntrusion(
-        trackHistory, ImageROI, IntrusionThreshold, MaxId=MaxId
+        cacheHistory, ImageROI, IntrusionThreshold, MaxId=MaxId
     )  # 获取入侵检测结果
 
     if result.size == 0:  # 无跟踪结果直接跳过
