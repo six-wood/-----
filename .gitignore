@@ -7,6 +7,7 @@ boxmot/mobilenetv2_x1_4_dukemtmcreid.pt
 boxmot/osnet_x0_25_msmt17.onnx
 boxmot/osnet_x0_25_msmt17.pt
 boxmot/ShakeFloor.mp4
+boxmot/result.mp4
 boxmot/yolov5x.pt
 boxmot/requirements.txt
 boxmot/.vscode

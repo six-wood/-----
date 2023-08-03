@@ -36,6 +36,10 @@ thickness = 2  # 演示图像参数
 fontscale = 0.5  # 演示图像参数
 
 
+# 创建视频保存结果
+fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+out = cv2.VideoWriter("result.mp4", fourcc, 30.0, (1280, 720))
+
 def track(dets, im):
     # dets 为检测结果 --> (left, up, right, bottom, conf, cls)
     # im 为图像 --> numpy数组，unit8类型
@@ -147,6 +151,9 @@ while True:  # 模拟图像流输入
 
     # show image
     cv2.imshow("frame", im)
+
+    # write video
+    out.write(im)
 
     # 推出按键
     if cv2.waitKey(1) & 0xFF == ord("q"):
